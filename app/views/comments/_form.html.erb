@@ -1,0 +1,48 @@
+<%= form_for([@comment.post, @comment]) do |form| %>
+    <% if @comment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+          <ul>
+            <% @comment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <% if @parent_title %>
+        <%= form.text_field :title, id: :comment_title, value: @parent_title.title, :required => true %>
+    <%else%>
+      <%= form.text_field :title, id: :comment_title, value: @post.title, :required => true%>
+    <%end%>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body, id: :comment_body, :required => true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_anon %>
+    <%= form.check_box :is_anon, id: :comment_is_anon %>
+  </div>
+
+
+  <div hidden class="field">
+    <%= form.label :parent_id %>
+    <%= form.number_field :parent_id, :value => @comment.parent_id %>
+  </div>
+
+  <div hidden class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id, :value => current_user.id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+
+<p>
+  <strong>Is anon:</strong>
+  <%= @post.is_anon %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user %>
+</p>
+
+<%= link_to 'Comments', post_comments_path(@post) %> |
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path(page: @current_page) %>

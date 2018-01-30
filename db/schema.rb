@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825081708) do
+ActiveRecord::Schema.define(version: 20171129190421) do
 
   create_table "broadcasts", force: :cascade do |t|
     t.text "content"
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 20170825081708) do
     t.index ["feed_id"], name: "index_broadcasts_feeds_on_feed_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.boolean "is_anon"
+    t.integer "parent_id"
+    t.integer "post_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "feeds", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -40,6 +53,25 @@ ActiveRecord::Schema.define(version: 20170825081708) do
     t.integer "photo_file_size"
     t.datetime "photo_updated_at"
     t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.boolean "is_anon"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "read_comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.integer "comment_id"
+    t.index ["comment_id"], name: "index_read_comments_on_comment_id"
+    t.index ["post_id"], name: "index_read_comments_on_post_id"
+    t.index ["user_id"], name: "index_read_comments_on_user_id"
   end
 
   create_table "user_details", force: :cascade do |t|

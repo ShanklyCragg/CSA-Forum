@@ -1,0 +1,6 @@
+<h1>Editing Post</h1>
+
+<%= render 'form', post: @post %>
+
+<%= link_to 'Show', post_path(@post, page: @current_page) %> |
+<%= link_to 'Back', posts_path(page: @current_page) %>

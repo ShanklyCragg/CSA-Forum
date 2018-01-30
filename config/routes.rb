@@ -1,6 +1,10 @@
 # Defines the app's routes
 # @author Chris Loftus
 Rails.application.routes.draw do
+  resources :posts do
+    resources :comments
+  end
+
   resources :users do
     # We add a special route to support the search field
     get 'search', on: :collection
@@ -10,6 +14,7 @@ Rails.application.routes.draw do
   # API for user account managment. This is provided
   # as an example. See the rest_client folder.
   namespace :api, defaults: {format: :json} do
+    resources :posts, except: [:new, :edit]
     resources :users, except: [:new, :edit] do
       get 'search', on: :collection
     end
